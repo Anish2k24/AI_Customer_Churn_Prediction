@@ -1,0 +1,16 @@
+customer_id,monthly_active_logins,support_tickets_per_month,feature_usage_score,days_last_active,contract_months_remaining,account_age_months,api_calls_per_day,data_storage_gb,upgrade_counts,churned
+CUST001,2,5,30,45,3,2,10,0.5,0,1
+CUST002,5,2,65,5,12,6,150,2,1,0
+CUST003,1,8,20,60,1,1,5,0.1,0,1
+CUST004,15,1,90,2,18,24,800,10,3,0
+CUST005,3,4,45,30,6,4,80,1,0,1
+CUST006,20,0,85,1,20,36,1000,15,5,0
+CUST007,1,10,15,75,0,1,2,0,0,1
+CUST008,8,1,75,3,14,18,400,5,2,0
+CUST009,4,3,50,20,9,8,200,3,1,0
+CUST010,0,2,25,90,2,1,1,0.1,0,1
+CUST011,12,1,88,1,24,48,950,12,4,0
+CUST012,2,6,35,50,2,1,15,0.8,0,1
+CUST013,18,0,92,1,22,30,900,14,3,0
+CUST014,6,2,70,8,15,10,250,3,2,0
+CUST015,1,9,18,65,1,2,8,0.2,0,1
