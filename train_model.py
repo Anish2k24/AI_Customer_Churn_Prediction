@@ -66,7 +66,6 @@ def train_models(X, y):
     joblib.dump(scaler, 'models/scaler.pkl')
     joblib.dump(X.columns.tolist(), 'models/feature_names.pkl')
         
-    # Print feature importance
     print("\nFeature Importance (Random Forest):")
     feature_importance = pd.DataFrame({
         'feature': X.columns,
