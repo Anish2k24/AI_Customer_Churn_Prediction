@@ -45,7 +45,6 @@ def train_models(X, y):
     print(f"Random Forest ROC-AUC: {roc_auc_score(y_test, rf_proba):.4f}")
     print(f"Random Forest Accuracy: {rf_model.score(X_test_scaled, y_test):.4f}")
     
-    # Train Gradient Boosting
     print("\nTraining Gradient Boosting...")
     gb_model = GradientBoostingClassifier(
         n_estimators=100,
@@ -59,7 +58,6 @@ def train_models(X, y):
     print(f"Gradient Boosting ROC-AUC: {roc_auc_score(y_test, gb_proba):.4f}")
     print(f"Gradient Boosting Accuracy: {gb_model.score(X_test_scaled, y_test):.4f}")
     
-    # Save models and scaler
     os.makedirs('models', exist_ok=True)
     joblib.dump(rf_model, 'models/rf_model.pkl')
     joblib.dump(gb_model, 'models/gb_model.pkl')
@@ -80,7 +78,6 @@ if __name__ == "__main__":
     print("CHURN PREDICTION MODEL TRAINING")
     print("=" * 50)
     
-    # Load and prepare data
     df, X, y = load_and_prepare_data()
     
     print(f"\nDataset shape: {df.shape}")
@@ -88,7 +85,6 @@ if __name__ == "__main__":
     print(f"\nFeatures ({len(X.columns)}):")
     print(X.columns.tolist())
     
-    # Train models
     train_models(X, y)
     
     print("\n" + "=" * 50)
