@@ -6,22 +6,20 @@ import os
 from sklearn.preprocessing import StandardScaler
 import plotly.express as px
 
-# Page configuration
+# Config of the page
 st.set_page_config(
     page_title="Churn Prediction System",
-    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom styling
 st.markdown("""
     <style>
     .main {background-color: #f8f9fa;}
     </style>
 """, unsafe_allow_html=True)
 
-# Load models function
+ # models function loading
 @st.cache_resource
 def load_models():
     try:
@@ -31,23 +29,23 @@ def load_models():
         features = joblib.load('models/feature_names.pkl')
         return rf_model, gb_model, scaler, features
     except FileNotFoundError:
-        st.error("❌ Models not found! Run 'python train_model.py' first.")
+        st.error(" Models not found! Run 'python train_model.py' first.")
         st.stop()
 
 # Main title
-st.markdown("# 📊 AI Customer Churn Risk Predictor")
+st.markdown("#  AI Customer Churn Risk Predictor")
 st.markdown("**Predict customer churn using Machine Learning Classification**")
 st.divider()
 
-# Create tabs
-tab1, tab2, tab3, tab4 = st.tabs(["🎯 Prediction", "📈 Model Performance", "📚 Data Explorer", "ℹ️ About"])
+# tabs created
+tab1, tab2, tab3, tab4 = st.tabs([" Prediction", " Model Performance", " Data Explorer", " About"])
 
-# ============ TAB 1: PREDICTION ============
+# 1st tab: Prediction 
 with tab1:
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.subheader("📋 Enter Customer Metrics")
+        st.subheader(" Enter Customer Metrics")
         
         col_input1, col_input2 = st.columns(2)
         
@@ -58,26 +56,26 @@ with tab1:
             api_calls = st.slider("🔌 API Calls Per Day", 0, 1000, 100, 10)
         
         with col_input2:
-            support_tickets = st.slider("🎟️ Support Tickets/Month", 0, 20, 2, 1)
-            account_age = st.slider("📅 Account Age (Months)", 0, 60, 12, 1)
-            contract_remaining = st.slider("📝 Contract Months Remaining", 0, 24, 6, 1)
-            data_storage = st.slider("💾 Data Storage (GB)", 0, 100, 2, 1)
+            support_tickets = st.slider(" Support Tickets/Month", 0, 20, 2, 1)
+            account_age = st.slider(" Account Age (Months)", 0, 60, 12, 1)
+            contract_remaining = st.slider(" Contract Months Remaining", 0, 24, 6, 1)
+            data_storage = st.slider(" Data Storage (GB)", 0, 100, 2, 1)
         
-        upgrades = st.slider("⬆️ Number of Upgrades", 0, 10, 1, 1)
+        upgrades = st.slider(" Number of Upgrades", 0, 10, 1, 1)
         
-        # Prepare features list
+        # Preparing the features list
         features_list = [
             monthly_logins, support_tickets, feature_usage, days_inactive,
             contract_remaining, account_age, api_calls, data_storage, upgrades
         ]
     
     with col2:
-        st.subheader("🔮 Quick Stats")
+        st.subheader(" Quick Stats")
         st.metric("Total Score", sum(features_list), "points")
         st.metric("Engagement %", round(monthly_logins * 3.33, 1), "login activity")
         st.metric("Product Adoption", feature_usage, "%")
     
-    # Load and predict
+    # Loading and prediction
     rf_model, gb_model, scaler, feature_names = load_models()
     features_scaled = scaler.transform([features_list])
     
@@ -88,25 +86,25 @@ with tab1:
     
     # Determine risk level
     if churn_score > 70:
-        risk_level = "🔴 CRITICAL"
+        risk_level = "🔴 Critical level"
         risk_color = "red"
-        recommendation = "⚠️ Immediate intervention required. Schedule urgent success call."
+        recommendation = " Immediate intervention required. Schedule urgent success call."
     elif churn_score > 50:
-        risk_level = "🟠 HIGH"
+        risk_level = "🟠 Higher level"
         risk_color = "orange"
         recommendation = "⏰ Schedule check-in within 48 hours. Identify pain points."
     elif churn_score > 30:
-        risk_level = "🟡 MEDIUM"
+        risk_level = "🟡 Moderate level"
         risk_color = "yellow"
         recommendation = "👁️ Monitor closely. Proactive engagement recommended."
     else:
-        risk_level = "🟢 LOW"
+        risk_level = "🟢 Lower level"
         risk_color = "green"
-        recommendation = "✅ Low risk. Continue standard account management."
+        recommendation = " Low risk. Continue standard account management."
     
     st.divider()
     
-    # Display results
+    # Displaying results
     col_result1, col_result2, col_result3 = st.columns(3)
     
     with col_result1:
@@ -121,48 +119,48 @@ with tab1:
     st.divider()
     
     # Risk factors analysis
-    st.subheader("⚠️ Risk Factors Identified")
+    st.subheader(" Risk Factors Identified")
     
     risk_factors = []
     
     if feature_usage < 30:
-        risk_factors.append("🚫 Low feature adoption - users not utilizing product")
+        risk_factors.append(" Low feature adoption - users not utilizing product")
     elif feature_usage < 50:
-        risk_factors.append("⚠️ Below-average feature usage")
+        risk_factors.append(" Below-average feature usage")
     else:
-        risk_factors.append("✅ Strong feature adoption")
+        risk_factors.append(" Strong feature adoption")
     
     if monthly_logins < 2:
-        risk_factors.append("🚫 Minimal login activity detected")
+        risk_factors.append(" Minimal login activity detected")
     elif monthly_logins < 5:
-        risk_factors.append("⚠️ Declining engagement levels")
+        risk_factors.append(" Declining engagement levels")
     else:
-        risk_factors.append("✅ Strong engagement")
+        risk_factors.append(" Strong engagement")
     
     if days_inactive > 30:
-        risk_factors.append("🚫 Inactive for extended period (>30 days)")
+        risk_factors.append(" Inactive for extended period (>30 days)")
     elif days_inactive > 14:
-        risk_factors.append("⚠️ Extended inactivity concerning")
+        risk_factors.append(" Extended inactivity concerning")
     else:
-        risk_factors.append("✅ Active user")
+        risk_factors.append(" Active user")
     
     if support_tickets > 8:
-        risk_factors.append("🚫 High support ticket volume - potential satisfaction issues")
+        risk_factors.append(" High support ticket volume - potential satisfaction issues")
     elif support_tickets == 0:
-        risk_factors.append("⚠️ No support contact - lack of engagement")
+        risk_factors.append(" No support contact - lack of engagement")
     else:
-        risk_factors.append("✅ Healthy support engagement")
+        risk_factors.append(" Healthy support engagement")
     
     for factor in risk_factors:
         st.info(factor)
     
     st.divider()
-    st.subheader("📋 Recommendation")
+    st.subheader(" Recommendation")
     st.success(recommendation)
 
-# ============ TAB 2: MODEL PERFORMANCE ============
+# 2nd tab: Model Performance
 with tab2:
-    st.subheader("📊 Model Evaluation Metrics")
+    st.subheader(" Model Evaluation Metrics")
     
     try:
         df_train = pd.read_csv('data/sample_customers.csv')
@@ -192,7 +190,7 @@ with tab2:
         st.divider()
         
         # Feature importance
-        st.subheader("🎯 Feature Importance Analysis")
+        st.subheader(" Feature Importance Analysis")
         
         feature_imp_rf = pd.DataFrame({
             'Feature': features,
@@ -219,9 +217,9 @@ with tab2:
     except Exception as e:
         st.warning(f"Could not load training data: {e}")
 
-# ============ TAB 3: DATA EXPLORER ============
+# 3rd tab: Data Explorer
 with tab3:
-    st.subheader("📚 Dataset Overview")
+    st.subheader(" Dataset Overview")
     
     try:
         df = pd.read_csv('data/sample_customers.csv')
@@ -242,7 +240,7 @@ with tab3:
         # Download button
         csv = df.to_csv(index=False)
         st.download_button(
-            label="📥 Download Dataset as CSV",
+            label=" Download Dataset as CSV",
             data=csv,
             file_name="customers_data.csv",
             mime="text/csv"
@@ -251,24 +249,24 @@ with tab3:
     except Exception as e:
         st.error(f"Error loading data: {e}")
 
-# ============ TAB 4: ABOUT ============
+# 4th tab: About section
 with tab4:
-    st.subheader("ℹ️ About This Project")
+    st.subheader(" About This Project")
     
     st.markdown("""
-    ### 🤖 AI Customer Churn Predictor
+    ###  AI Customer Churn Predictor
     
     This machine learning application predicts customer churn in SaaS businesses 
     using behavioral metrics and ML classification.
     
-    #### 🛠️ Technology Stack
+    ####  Technology Stack
     - **UI Framework:** Streamlit
     - **ML Libraries:** Scikit-learn
     - **Data Processing:** Pandas, NumPy
     - **Visualization:** Plotly
     - **Models:** Random Forest & Gradient Boosting
     
-    #### 📊 9 Input Features
+    #### 9 Input Features
     1. Monthly Active Logins
     2. Support Tickets Per Month
     3. Feature Usage Score
@@ -279,13 +277,13 @@ with tab4:
     8. Data Storage (GB)
     9. Upgrade Counts
     
-    #### 🎯 Risk Levels
+    #### Risk Levels
     - **CRITICAL (>70%):** Immediate intervention required
     - **HIGH (51-70%):** Schedule a check-in
     - **MEDIUM (31-50%):** Monitor closely
     - **LOW (<30%):** Standard account management
     
-    #### ✨ Key Features
+    #### Key Features
     - Real-time churn prediction
     - Dual model ensemble (Random Forest + Gradient Boosting)
     - Risk factor identification
@@ -293,13 +291,13 @@ with tab4:
     - Feature importance visualization
     - Data explorer with CSV downloads
     
-    #### 📈 Model Performance
+    ####  Model Performance
     - Random Forest Accuracy: 100%
     - Gradient Boosting Accuracy: 100%
     - ROC-AUC Score: 1.0000
     - Training Time: <1 second
     
-    #### 🚀 How to Use
+    #### How to Use
     1. Adjust customer metrics using the sliders in the Prediction tab
     2. View real-time churn risk score and assessment
     3. Check identified risk factors
