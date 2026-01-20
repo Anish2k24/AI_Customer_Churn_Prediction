@@ -224,7 +224,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Your Name** - [anishbhattacharjee543@gmail.com](mailto:anishbhattacharjee543@gmail.com)
 
-**Project Link**: [https://github.com/your-username/ai-customer-churn-predictor](https://github.com/Anish2k24/AI_Customer_Churn_Prediction/tree/main)
+**Project Link**: [https://github.com/Anish2k24/AI_Customer_Churn_Prediction/tree/main](https://github.com/Anish2k24/AI_Customer_Churn_Prediction/tree/main)
 
 ## 🎓 Learning Outcomes
 
